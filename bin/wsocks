@@ -1,24 +1,24 @@
-#!/usr/bin/env node
+#!/usr/bin/env coffee
 
-var cp = require('child_process');
+cp = require 'child_process'
 
-var args = process.argv.slice(2)
-if (args.length != 1) throw new Error('Set start or stop argument.');
-if (args[0] != 'start' && args[0] != 'stop') throw new Error('Set start or stop argument.');
+args = process.argv.slice 2
+throw new Error 'Set \'start\' or \'stop\' argument.' if args.length != 1
+throw new Error 'Set \'start\' or \'stop\' argument.' if args[0] != 'start' && args[0] != 'stop'
 
-switch (args[0]) {
-	case 'start':
-		var libPath = __dirname + '/../lib';
-		var serverScriptPath = libPath + '/wsocks.js';
-		var opt = {
-			stdio: 'inherit',
-			env: process.env,
-			cwd: libPath,
+console.log process.execPath
+console.log process.argv
+console.log process.mainModule.filename
+console.log process.env._
+
+switch args[0]
+	when 'start'
+		libPath = __dirname + '/../lib'
+		serverScriptPath = libPath + '/wsocks.js'
+		opt =
+			stdio: 'inherit'
+			env: process.env
+			cwd: libPath
 			detached: true
-		};
-		var child = cp.spawn(process.execPath, [serverScriptPath], opt);
-		child.unref();
-		break;
-	case 'stop':
-		break;
-}
+		child = cp.spawn(process.execPath, [serverScriptPath], opt)
+		child.unref()
